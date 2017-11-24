@@ -57,5 +57,7 @@ var nzh = new Author('nzh',
     );
 console.log(nzh.getName());
 console.log(nzh.getBooks());
+
+
 // var me = new Person('Huzj');
 // console.log(me.getName());

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象字面量</title>
+</head>
+<body>
+    <script>
+        // 如果浏览器不支持 es6 的新的方法 Object.create
+        // if(typeof Object.create !== 'function'){
+            /* 
+            *实现原型对象的继承  o 为要传入的原型对象 类型为Object
+            */
+            // Object.create = function(o) {
+            //     // 空函数  空的类
+            //     var F = function() {};
+            //     F.prototype = o;
+            //     // 最后获得新鲜出炉的对象
+            //     return new F();
+            // }
+        // }
+        var stooge = {
+            "first-name": "Jerome",
+            "last-name": "Howard",
+            
+        }
+         
+        // toString Object原型对象上的方法
+        // 每个对象都会有一个原型对象  默认原型对象为Object 其上有 toString方法
+        // 原型对象与对象之间 是继承关系
+        // 引用也是两个对象的关系
+
+        // 将stooge对象作为原型对象 生成一个新的对象
+        // alert("IE bad");
+        var anthor_stooge = Object.create(stooge);
+        console.log(anthor_stooge)
+        anthor_stooge.hasGirlFirend = false;
+        // console.log(stooge)
+        for(key in anthor_stooge) {
+            // 判断是否是自身的属性
+            if(anthor_stooge.hasOwnProperty(key)){
+                console.log(key);
+                console.log(anthor_stooge[key]);
+            }
+        }
+        console.log(anthor_stooge.hasOwnProperty('constructor'));
+        console.log(anthor_stooge.hasOwnProperty('toString'));
+        console.log(anthor_stooge.hasOwnProperty('first-name'));
+
+        // 继承完成后 改变原对象的属性 子对象依然能获得对应的改变 
+        // js 动态属性
+        stooge.city = '南昌';
+        console.log(anthor_stooge.city);
+
+        delete stooge.city;
+        console.log(anthor_stooge);
+        // .操作运算符 和 [] 操作运算符都可以获得其中的属性
+        // var name = stooge["first-name"] + stooge["last-name"] ;
+        // // var x = {};
+        var x = {...stooge};
+        x.sex = '男';
+        // console.log(stooge);
+        console.log(x);
+    
+    </script>
+</body>
+</html>

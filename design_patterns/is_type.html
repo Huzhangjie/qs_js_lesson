@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>type 判断</title>
+</head>
+<body>
+    <script>
+        // var obj = {"name": "Huzj"}
+        // // [object Object]
+        // // Object 是obj 的原型对象
+        // console.log(obj.toString())
+        // var fn = function() {}
+        // var arr = ['1', '2']
+        // console.log(arr.toString())
+        // console.log(fn.toString())
+        // var num = 123
+        // console.log(num.toString())
+        // // 想要判断num 是数值类型？
+        // console.log(typeof(arr))
+        // console.log(Object.prototype.toString.call(arr))
+        // console.log(Object.prototype.toString.call(num))
+        // console.log(Object.prototype.toString.call("abc"))
+        // console.log(Object.prototype.toString.call(true))
+        // console.log(Object.prototype.toString.call(fn))
+        // console.log(Object.prototype.toString.call(undefined))
+        // console.log(Object.prototype.toString.call(null))
+        // console.log(Object.prototype.toString.call(NaN))//number
+
+        // var typePanDuan = function(e) {
+        //     var type;
+        //     switch(Object.prototype.toString.call(e)){
+        //     case '[object Array]':type="isArray";break;
+        //     case 'Number': type='isNumber';break;
+        //     case 'Boolean': type='isBoolean';break;
+        //     case 'String': type='isString';break;
+        //     case 'Function': type='isFunction';break;
+        //     case 'Undefined': type='isUndefined';break;
+        //     case 'Null': type='isNull'; break;
+        //     }
+        //     return type;
+        // }
+        // 判断是否为某种类型
+        // 分装 函数语义化 
+        // 参数 obj ：any
+        // 结果 true/flase
+        // var isArray = function(obj) {
+        //     return Object.prototype.toString.call(obj) === '[object Array]';
+        // }
+        // var isFunction = function(obj) {
+        //     return Object.prototype.toString.call(obj) === '[object Function]';
+        // }
+        // var isNumber = function(obj) {
+        //     return Object.prototype.toString.call(obj) === '[object Number]';
+        // }
+        // var isUndefined = function(obj) {
+        //     return Object.prototype.toString.call(obj) === '[object Undefined]';
+        // }
+        // var isBoolean = function(obj) {
+        //     return Object.prototype.toString.call(obj) === '[object Boolean]';
+        // }
+        // var isString = function(obj) {
+        //     return Object.prototype.toString.call(obj) === '[object String]';
+        // };
+
+        // 将所有方法写进同一个对象 减少全局变量的命名
+        // var Type = {
+        //     isArray:  function(obj) {
+        //         return Object.prototype.toString.call(obj) === '[object Array]';
+        //     },
+        //     isFunction: function(obj) {
+        //         return Object.prototype.toString.call(obj) === '[object Function]';
+        //     },
+        //     isNumber:  function(obj) {
+        //         return Object.prototype.toString.call(obj) === '[object Number]';
+        //     },
+        //     isUndefined: function(obj) {
+        //         return Object.prototype.toString.call(obj) === '[object Undefined]';
+        //     },
+        //     isBoolean: function(obj) {
+        //         return Object.prototype.toString.call(obj) === '[object Boolean]';
+        //     },
+        //     isString: function(obj) {
+        //         return Object.prototype.toString.call(obj) === '[object String]';
+        //     },
+        //     isObject: function(obj) {
+        //         return obj.toString() === '[object Object]'
+        //     }
+        // }
+        // console.log(Type.isArray('num'));
+        var Type = {};
+        for(let i = 0, type; type = ['String','Array','Function','Number','Boolean'][i]; i++){
+            // console.log(i,type)
+            // 异步
+            // es6 语法 ` `
+            // Type[`is${type}`] = function(obj) {
+            Type['is' + type] = function(obj) {
+                return Object.prototype.toString.call(obj) === '[object' + type + ']';
+            }
+        }
+        console.log(Type.isArray(123))
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="doc">
+
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        /*
+         * 类 EditInPlace 
+         * 用于就地编辑 
+         * 参数 id 必填 页面的id
+         * parent 必填 将这个组件挂载在父元素上
+         * value 选填 默认值
+         */
+        function EditInPlace(o) {
+            this.id = o.id;
+            this.parentElement = o.parent;
+            this.value = o.value || 'default value'; 
+            this.url = o.url || undefined;
+            this.key = o.key || null;
+            // console.log(this.value);
+            // 将组件加到页面上
+            // 封装方法
+            this.createElement();
+            this.attachEvents();
+        }
+
+        EditInPlace.prototype.attachEvents = function() {
+            // this是每个函数都有的 不用箭头函数的话
+            // this就由函数被调用的方式决定
+            // 事件回调函数作为普通函数被调用  this 指向 window
+            this.staticElement.addEventListener('click',() => {
+                this.convertToEdit();
+            })
+
+            this.cancelButton.addEventListener('click',() => {
+                // 万一改了文字
+                var strVal = this.inputElement.value;
+                if(strVal != this.value) {
+                    if(confirm('确定放弃此次修改吗? ')) {
+                        this.convertToText();
+                    }
+                    return ;
+                }
+                this.convertToText();
+            })
+
+            this.saveButton.addEventListener('click',() => {
+                // 和后端同步数据 ajax 
+                // 违背的封装(抽象) 
+                // 业务就耦合了 具象 url key 
+                var strVal = this.inputElement.value;
+                if(!this.url){
+                    this.staticElement.innerText = strVal;
+                    this.convertToText();
+                    return ;
+                }
+                $.getJSON(this.url,
+                    {[this.key]: strVal},(data) => {
+                        this.staticElement.innerText = strVal;
+                        this.convertToText();
+                    })
+                    
+            })
+        }
+
+        EditInPlace.prototype.createElement = function() {
+            //DOM 节点 
+            this.containerElement = document.createElement('div');
+            // 挂载节点
+            this.parentElement.appendChild(this.containerElement);
+            this.staticElement = document.createElement('span');
+            this.containerElement.appendChild(this.staticElement);
+            this.staticElement.innerText = this.value;
+            
+            this.inputElement = document.createElement('input');
+            this.containerElement.appendChild(this.inputElement);
+            this.inputElement.value = this.value;
+
+            this.saveButton = document.createElement('input');
+            this.saveButton.type = 'button'
+            this.saveButton.value = '保存';
+            this.containerElement.appendChild(this.saveButton)
+
+            this.cancelButton = document.createElement('input');
+            this.cancelButton.type = 'button'
+            this.cancelButton.value = '取消';
+            this.containerElement.appendChild(this.cancelButton)
+
+            this.convertToText();
+        }
+
+        EditInPlace.prototype.convertToText = function() {
+            this.inputElement.style.display = 'none';
+            this.saveButton.style.display = 'none'
+            this.cancelButton.style.display = 'none'
+            this.staticElement.style.display = 'inline';
+        }
+
+        EditInPlace.prototype.convertToEdit = function() {
+            this.inputElement.style.display = 'inline';
+            this.saveButton.style.display = 'inline'
+            this.cancelButton.style.display = 'inline'
+            this.staticElement.style.display = 'none';
+        }
+
+        // 封装
+
+        var title_url = 'http://www.easy-mock.com/mock/5a09867f28b23066479b8365/ajaxData/getUserInfo';
+        var title_key = 'title';
+
+        var titleClassical = new EditInPlace({
+            id: 'titleClassical',
+            value: "Title here",
+            parent: document.getElementById('doc'),
+            // url: title_url,
+            // key: title_key
+        });
+
+        // var nameClassical = new EditInPlace('nameClassical',
+        //     document.getElementById('doc'),'未命名');
+
+        // var addressClassical = new EditInPlace('addressClassical',
+        //     document.getElementById('doc'),'新建县');
+    </script>
+</body>
+</html>

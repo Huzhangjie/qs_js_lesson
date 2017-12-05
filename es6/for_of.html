@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>for of</title>
+</head>
+<body>
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+    <div class="box">4</div>
+    <div class="box">5</div>
+    <script>
+        const myArr = [1,2,3];
+        // for (let index = 0, len=myArr.length; index <len; index++) {
+        //     // break; continue;
+        //     if(index == 1 ) continue;
+        //     console.log(myArr[index]);
+        // }
+        // 
+        // map 遍历 forEach优点 简洁
+        // myArr.forEach(function(value){
+        //     console.log(value)
+        // })
+        // 进化循环
+
+        // for key in 
+        // key 会转成字符串 不适合数组的循环
+        // 不care key 顺序 也就无所谓 
+        // for(let index in myArr){
+        //     console.log(Number(index) + myArr[index])
+        // } 
+
+        // es6 提供的最强大的遍历数据循环
+        // 比forEach优秀 可以终止循环
+        let i =0;
+        for (let value of myArr) {
+            if(value == 2) continue;
+            console.log(value);
+            i++;
+        }
+
+        // nodeList 类数组
+        const boxes = document.querySelectorAll(".box");
+        // boxes.forEach(box => {
+        //     console.log(box.innerHTML);
+        // })
+        // for(let box of boxes) {
+        //     console.log(box.innerHTML);
+        // }
+        // const singer = "luochi"
+        // for (let char of singer){
+        //     console.log(char)
+        // }
+
+        // json  is not iterable 迭代器
+        // const luochi = {
+        //     name: "luochi",
+        //     sex: "male"
+        // }
+        // for (let key of Object.keys(luochi)) {
+        //     console.log(key+ ":" + luochi[key])
+        // }
+
+        // 数组中重复
+        var singers = ['adele', '周杰伦', '周杰伦', '周杰伦'];
+        var uniqueSingers = new Set(singers);
+        console.log(uniqueSingers)
+        // iterable
+        for(let singer of singers) {
+            console.log(singer)
+        }
+    </script>
+</body>
+</html>

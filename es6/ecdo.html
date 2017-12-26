@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // ecDo 是作者的lib 名字
+    let ecDo = {
+      // 判断用何设备上网
+      // isAndroid
+      // isiPhone
+      browserInfo (type) {
+        // BOM 访问网页的设备信息
+        // console.log(navigator.userAgent)
+        switch (type) {
+          case 'android': 
+            return navigator.userAgent.toLowerCase().indexOf('android') !== -1;
+            break;
+          case 'ipad': 
+            return navigator.userAgent.toLowerCase().indexOf('ipad') !== -1;
+            break;
+          case 'iphone': 
+            return navigator.userAgent.toLowerCase().indexOf('iphone') !== -1;
+            break;
+          case 'weixin':
+            return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1;
+            break;
+          default: 
+            return navigator.userAgent;
+        }
+      }
+    }
+    if(ecDo.browserInfo('android')) {
+      alert('你的设备是安卓')
+    }else if(ecDo.browserInfo('iphone')) {
+      alert('你的设备是iphone')
+    }else if(ecDo.browserInfo('ipad')) {
+      alert('你的设备是ipad')
+    }else if(ecDo.browserInfo('weixin')) {
+      alert('你正使用微信访问')
+    }
+    // h5页面, 在微信生态和微信环境下有较大区别
+    // 微信中可以得到微信授权
+
+    // 解析url为一个对象
+    // http://localhost:3000/ecdo.html?a=1&b=3
+    // {
+    //   a: 1,
+    //   b: 3
+    // } query string -> query obj
+    
+    
+      
+  </script>
+</body>
+</html>

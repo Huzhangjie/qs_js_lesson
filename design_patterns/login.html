@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单例实现登录弹窗</title>
+
+    <style>
+    .login-layer {
+        width: 200px;
+        height: 200px;
+        background: rgba(0,0,0,.6);
+        text-align: center;
+        line-height: 200px;
+    }
+    </style>
+</head>
+<body>
+    <button id="loginBtn">登录</button>
+    <script>
+        const btn = document.getElementById('loginBtn')
+        btn.addEventListener('click', function() {
+            // loginLayer();
+            // loginLayer.changeDisplay()
+            // 变量的提升 变量在下 引用在上
+            LoginLayer.getInstance();
+        },false)
+        // 使用static 将new限制为一次 
+        // 立即执行函数 函数只能运行一次
+        // js 是一个 class free 的语言 无类的
+        // 只有对象
+        // var loginLayer = (function() {
+        //     div = document.createElement('div');
+        //     div.classList.add('login-layer');
+        //     div.innerHTML = "我是登录浮窗";
+        //     document.body.appendChild(div);
+        //     div.style.display = "none";
+        //     
+        //     return div;
+        // })()
+        // 缺点 且很明显？ 会立即执行 需要消耗资源
+        // 单例 推迟到点击按钮的那一刻
+        class LoginLayer {
+            constructor() {
+                this.div = this.init();
+                this.instance = null;  
+                this.show();
+            }
+            static getInstance() {
+                if(!this.instance) {
+                    this.instance = new LoginLayer();
+                }
+                
+                return this.instance;
+            }
+            // changeDisplay() {
+            //     if(this.div.style.display=='none')
+            //         this.div.style.display=="inline-block"
+            //     else
+            //         this.div.style.display=="none"
+            // }
+            show() {
+                this.div.style.display = "inline-block"
+            }
+            init(){
+                var div = document.createElement('div');
+                div.classList.add('login-layer');
+                div.innerHTML = "我是登录浮窗";
+                div.style.display = "none";
+                document.body.appendChild(div);
+                console.log(div)
+                return div;
+            }
+        }
+    </script>
+</body>
+</html>

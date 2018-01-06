@@ -1,0 +1,3 @@
+/node_modules/
+./bass/node_modules/*
+/es6/airbnb/node_modules/
